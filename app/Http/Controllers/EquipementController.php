@@ -73,7 +73,7 @@ class EquipementController extends Controller
     {
         $this->deleteEquipement->execute($id);
 
-        return ApiResponse::crudSuccess('create', self::RESOURCE);
+        return ApiResponse::crudSuccess('delete', self::RESOURCE);
     }
 
 }
