@@ -26,25 +26,25 @@ class UseCaseServiceProvider extends ServiceProvider
         });
 
         $this->app->singleton(DeleteEquipement::class, function ($app) {
-            return new CreateEquipement(
+            return new DeleteEquipement(
                 $app->make(\App\Domain\Repositories\EquipementRepositoryInterface::class)
             );
         });
 
         $this->app->singleton(GetEquipementById::class, function ($app) {
-            return new CreateEquipement(
+            return new GetEquipementById(
                 $app->make(\App\Domain\Repositories\EquipementRepositoryInterface::class)
             );
         });
 
         $this->app->singleton(ListEquipements::class, function ($app) {
-            return new CreateEquipement(
+            return new ListEquipements(
                 $app->make(\App\Domain\Repositories\EquipementRepositoryInterface::class)
             );
         });
 
         $this->app->singleton(UpdateEquipement::class, function ($app) {
-            return new CreateEquipement(
+            return new UpdateEquipement(
                 $app->make(\App\Domain\Repositories\EquipementRepositoryInterface::class)
             );
         });
@@ -57,5 +57,5 @@ class UseCaseServiceProvider extends ServiceProvider
     public function boot(): void
     {
         //
-    } 
+    }
 }

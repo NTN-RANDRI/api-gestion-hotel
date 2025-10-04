@@ -4,6 +4,7 @@ namespace App\Application\UseCases\Equipement;
 
 use App\Application\DTOs\Equipement\EquipementOutputDTO;
 use App\Domain\Repositories\EquipementRepositoryInterface;
+use App\Exceptions\Equipement\EquipementNotFoundException;
 
 class GetEquipementById
 {
@@ -16,7 +17,7 @@ class GetEquipementById
         $equipement = $this->equipementRepositoryInterface->find($id);
 
         if (!$equipement) {
-            throw new \Exception("Equipement not found");
+            throw new EquipementNotFoundException();
         }
 
         return new EquipementOutputDTO(

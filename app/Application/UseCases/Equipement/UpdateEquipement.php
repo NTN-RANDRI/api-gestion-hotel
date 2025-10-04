@@ -5,6 +5,7 @@ namespace App\Application\UseCases\Equipement;
 use App\Application\DTOs\Equipement\EquipementInputDTO;
 use App\Application\DTOs\Equipement\EquipementOutputDTO;
 use App\Domain\Repositories\EquipementRepositoryInterface;
+use App\Exceptions\Equipement\EquipementNotFoundException;
 
 class UpdateEquipement
 {
@@ -17,7 +18,7 @@ class UpdateEquipement
         $equipement = $this->equipementRepositoryInterface->find($id);
 
         if (!$equipement) {
-            throw new \Exception("Equipement not found");
+            throw new EquipementNotFoundException();
         }
 
         $equipement->setNom($equipementInputDTO->nom);

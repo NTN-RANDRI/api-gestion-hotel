@@ -10,11 +10,12 @@ use App\Application\UseCases\Equipement\ListEquipements;
 use App\Application\UseCases\Equipement\UpdateEquipement;
 use App\Http\Requests\Equipement\StoreEquipementRequest;
 use App\Http\Requests\Equipement\UpdateEquipementRequest;
+use App\Http\Responses\ApiResponse;
 use Illuminate\Http\JsonResponse;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class EquipementController extends Controller
 {
+    private const RESOURCE = 'Équipement';
 
     public function __construct(
         private ListEquipements $listEquipements,
@@ -29,19 +30,14 @@ class EquipementController extends Controller
     {
         $equipements = $this->listEquipements->execute();
 
-        return response()->json($equipements);
+        return ApiResponse::crudSuccess('list', self::RESOURCE, $equipements);
     }
 
     public function show(int $id): JsonResponse
     {
-        try {
-            $outputDTO = $this->getEquipementById->execute($id);
+        $outputDTO = $this->getEquipementById->execute($id);
 
-            return response()->json($outputDTO);
-        } catch (\Exception $e) {
-            // return response()->json(['message' => $e->getMessage()], 404);
-            throw $e;
-        }
+        return ApiResponse::crudSuccess('read', self::RESOURCE, $outputDTO);
 
     }
 
@@ -56,7 +52,7 @@ class EquipementController extends Controller
 
         $outputDTO = $this->createEquipement->execute($inputDTO);
 
-        return response()->json($outputDTO);
+        return ApiResponse::crudSuccess('create', self::RESOURCE, $outputDTO);
     }
 
     public function update(int $id, UpdateEquipementRequest $request): JsonResponse
@@ -68,28 +64,16 @@ class EquipementController extends Controller
             description: $validated['description']
         );
 
-        try {
-            $outputDTO = $this->updateEquipement->execute($id, $inputDTO);
+        $outputDTO = $this->updateEquipement->execute($id, $inputDTO);
 
-            return response()->json($outputDTO);
-        } catch (\Exception $e) {
-            return response()->json(['message' => $e->getMessage()], 404);
-        }
-
-
+        return ApiResponse::crudSuccess('update', self::RESOURCE, $outputDTO);
     }
 
     public function destroy(int $id): JsonResponse
     {
-        try {
-            $this->deleteEquipement->execute($id);
+        $this->deleteEquipement->execute($id);
 
-            return response()->json(['message' => "Equipement supprimer"]);
-        } catch (NotFoundHttpException $e) {
-            // return response()->json(['message' => $e->getMessage()], 404);
-            throw $e;
-        }
-
+        return ApiResponse::crudSuccess('create', self::RESOURCE);
     }
 
 }

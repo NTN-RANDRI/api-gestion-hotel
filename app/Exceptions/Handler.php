@@ -2,7 +2,9 @@
 
 namespace App\Exceptions;
 
+use App\Http\Responses\ApiResponse;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Validation\ValidationException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -25,6 +27,24 @@ class Handler extends ExceptionHandler
     {
         $this->reportable(function (Throwable $e) {
             //
+        });
+
+        $this->renderable(function (AppException $e) {
+            return ApiResponse::error(
+                errors: [],
+                message: $e->getMessage(),
+                status: $e->getStatusCode(),
+                exception: $e
+            );
+        });
+
+        $this->renderable(function (ValidationException $e) {
+            return ApiResponse::error(
+                errors: $e->errors(),
+                message: $e->getMessage(),
+                status: 422,
+                exception: $e
+            );
         });
     }
 }

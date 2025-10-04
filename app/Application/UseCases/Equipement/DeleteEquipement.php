@@ -3,7 +3,7 @@
 namespace App\Application\UseCases\Equipement;
 
 use App\Domain\Repositories\EquipementRepositoryInterface;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use App\Exceptions\Equipement\EquipementNotFoundException;
 
 class DeleteEquipement
 {
@@ -16,7 +16,7 @@ class DeleteEquipement
         $equipement = $this->equipementRepositoryInterface->find($id);
 
         if (!$equipement) {
-            throw new NotFoundHttpException("Equipement not found");
+            throw new EquipementNotFoundException();
         }
 
         $this->equipementRepositoryInterface->delete($equipement->getId());
