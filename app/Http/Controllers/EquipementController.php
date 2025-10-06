@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Application\DTOs\Equipement\EquipementInputDTO;
+use App\Application\Mappers\EquipementRequestMapper;
 use App\Application\UseCases\Equipement\CreateEquipement;
 use App\Application\UseCases\Equipement\DeleteEquipement;
 use App\Application\UseCases\Equipement\GetEquipementById;
@@ -44,12 +45,7 @@ class EquipementController extends Controller
     public function store(StoreEquipementRequest $request): JsonResponse
     {
         $validated = $request->validated();
-
-        $inputDTO = new EquipementInputDTO(
-            nom: $validated['nom'],
-            description: $validated['description'] ?? null
-        );
-
+        $inputDTO = EquipementRequestMapper::fromRequest($validated);
         $outputDTO = $this->createEquipement->execute($inputDTO);
 
         return ApiResponse::crudSuccess('create', self::RESOURCE, $outputDTO);
@@ -58,12 +54,7 @@ class EquipementController extends Controller
     public function update(int $id, UpdateEquipementRequest $request): JsonResponse
     {
         $validated = $request->validated();
-
-        $inputDTO = new EquipementInputDTO(
-            nom: $validated['nom'],
-            description: $validated['description']
-        );
-
+        $inputDTO = EquipementRequestMapper::fromRequest($validated);
         $outputDTO = $this->updateEquipement->execute($id, $inputDTO);
 
         return ApiResponse::crudSuccess('update', self::RESOURCE, $outputDTO);

@@ -13,13 +13,4 @@ class EquipementInputDTO
     )
     {}
 
-    public function toEquipement(): Equipement
-    {
-        return new Equipement(
-            null,
-            $this->nom,
-            $this->description
-        );
-    }
-
 }

@@ -31,7 +31,7 @@ class EquipementRepository implements EquipementRepositoryInterface
 
         if ($id) {
             $model = EquipementModel::find($id);
-            $model->update(EquipementMapper::toArray($equipement));
+            $model->update(EquipementMapper::toArray($equipement)); 
         } else {
             $model = EquipementModel::create(EquipementMapper::toArray($equipement));
         }

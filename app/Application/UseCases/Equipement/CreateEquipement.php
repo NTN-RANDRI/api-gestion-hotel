@@ -4,7 +4,7 @@ namespace App\Application\UseCases\Equipement;
 
 use App\Application\DTOs\Equipement\EquipementInputDTO;
 use App\Application\DTOs\Equipement\EquipementOutputDTO;
-use App\Domain\Entities\Equipement;
+use App\Application\Mappers\EquipementRequestMapper;
 use App\Domain\Repositories\EquipementRepositoryInterface;
 
 class CreateEquipement
@@ -15,15 +15,10 @@ class CreateEquipement
 
     public function execute(EquipementInputDTO $equipementInputDTO): EquipementOutputDTO
     {
-        $equipement = $equipementInputDTO->toEquipement();
-
+        $equipement = EquipementRequestMapper::toDomain($equipementInputDTO);
         $equipement = $this->equipementRepositoryInterface->save($equipement);
 
-        return new EquipementOutputDTO(
-            $equipement->getId(),
-            $equipement->getNom(),
-            $equipement->getDescription()
-        );
+        return EquipementRequestMapper::toDTO($equipement);
     }
 
 }
