@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use App\Domain\Repositories\EquipementRepositoryInterface;
-use App\Infrastructure\Persistance\Eloquent\EquipementRepository;
+use App\Infrastructure\Persistance\Eloquent\Repositories\EquipementRepository;
 use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
