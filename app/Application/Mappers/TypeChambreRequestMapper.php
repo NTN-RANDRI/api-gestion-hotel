@@ -13,8 +13,8 @@ class TypeChambreRequestMapper
     {
         return new TypeChambreInputDTO(
             nom: $data['nom'],
-            nombreLits: $data['nombreLits'],
-            capaciteMax: $data['capaciteMax'],
+            nombreLits: $data['nombre_lits'],
+            capaciteMax: $data['capacite_max'],
             description: $data['description'] ?? null
         );
     }

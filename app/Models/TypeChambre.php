@@ -1,0 +1,19 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class TypeChambre extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'nom',
+        'nombre_lits',
+        'capacite_max',
+        'description',
+    ];
+    
+}
