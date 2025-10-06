@@ -2,8 +2,6 @@
 
 namespace App\Application\DTOs\Equipement;
 
-use App\Domain\Entities\Equipement;
-
 class EquipementInputDTO
 {
 

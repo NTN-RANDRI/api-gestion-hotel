@@ -4,8 +4,9 @@ namespace App\Application\UseCases\Equipement;
 
 use App\Application\DTOs\Equipement\EquipementInputDTO;
 use App\Application\DTOs\Equipement\EquipementOutputDTO;
+use App\Application\Mappers\EquipementRequestMapper;
 use App\Domain\Repositories\EquipementRepositoryInterface;
-use App\Exceptions\Equipement\EquipementNotFoundException;
+use App\Exceptions\Entity\EntityNotFoundException;
 
 class UpdateEquipement
 {
@@ -18,7 +19,7 @@ class UpdateEquipement
         $equipement = $this->equipementRepositoryInterface->find($id);
 
         if (!$equipement) {
-            throw new EquipementNotFoundException();
+            throw new EntityNotFoundException('Equipement');
         }
 
         $equipement->setNom($equipementInputDTO->nom);
@@ -26,11 +27,7 @@ class UpdateEquipement
 
         $this->equipementRepositoryInterface->save($equipement);
 
-        return new EquipementOutputDTO(
-            $equipement->getId(),
-            $equipement->getNom(),
-            $equipement->getDescription()
-        );
+        return EquipementRequestMapper::toDTO($equipement);
     }
 
 }

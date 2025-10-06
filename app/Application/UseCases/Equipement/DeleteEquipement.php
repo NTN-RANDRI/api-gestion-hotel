@@ -3,7 +3,7 @@
 namespace App\Application\UseCases\Equipement;
 
 use App\Domain\Repositories\EquipementRepositoryInterface;
-use App\Exceptions\Equipement\EquipementNotFoundException;
+use App\Exceptions\Entity\EntityNotFoundException;
 
 class DeleteEquipement
 {
@@ -16,7 +16,7 @@ class DeleteEquipement
         $equipement = $this->equipementRepositoryInterface->find($id);
 
         if (!$equipement) {
-            throw new EquipementNotFoundException();
+            throw new EntityNotFoundException('Equipement');
         }
 
         $this->equipementRepositoryInterface->delete($equipement->getId());

@@ -2,7 +2,7 @@
 
 namespace App\Application\UseCases\Equipement;
 
-use App\Application\DTOs\Equipement\EquipementOutputDTO;
+use App\Application\Mappers\EquipementRequestMapper;
 use App\Domain\Repositories\EquipementRepositoryInterface;
 
 class ListEquipements
@@ -15,11 +15,7 @@ class ListEquipements
     {
         $equipements = $this->equipementRepositoryInterface->all();
 
-        return array_map(fn($equipement) => new EquipementOutputDTO(
-            id: $equipement->getId(),
-            nom: $equipement->getNom(),
-            description: $equipement->getDescription()
-        ), $equipements);
+        return array_map(fn($equipement) => EquipementRequestMapper::toDTO($equipement), $equipements);
     }
 
 }

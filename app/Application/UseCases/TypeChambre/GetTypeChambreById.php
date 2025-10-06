@@ -2,21 +2,24 @@
 
 namespace App\Application\UseCases\TypeChambre;
 
-use App\Application\DTOs\TypeChambre\TypeChambreInputDTO;
 use App\Application\DTOs\TypeChambre\TypeChambreOutputDTO;
 use App\Application\Mappers\TypeChambreRequestMapper;
 use App\Domain\Repositories\TypeChambreRepositoryInterface;
+use App\Exceptions\Entity\EntityNotFoundException;
 
-class CreateTypeChambre
+class GetTypeChambreById
 {
 
     public function __construct(private TypeChambreRepositoryInterface $typeChambreRepositoryInterface)
     {}
 
-    public function execute(TypeChambreInputDTO $inputDTO): TypeChambreOutputDTO
+    public function execute(int $id): TypeChambreOutputDTO
     {
-        $entity = TypeChambreRequestMapper::toDomain($inputDTO);
-        $entity = $this->typeChambreRepositoryInterface->save($entity);
+        $entity = $this->typeChambreRepositoryInterface->find($id);
+
+        if (!$entity) {
+            throw new EntityNotFoundException('TypeChambre');
+        }
 
         return TypeChambreRequestMapper::toDTO($entity);
     }
