@@ -5,6 +5,8 @@ namespace App\Domain\Entities;
 class TypeChambre
 {
 
+    // private array $chambres = [];
+
     public function __construct(
         private ?int $id,
         private string $nom,
@@ -13,6 +15,16 @@ class TypeChambre
         private ?string $description
     )
     {}
+
+    // public function addChambre(Chambre $chambre): void
+    // {
+    //     $this->chambres[] = $chambre;
+    // }
+
+    // public function getChambres(): array
+    // {
+    //     return $this->chambres;
+    // }
 
     /**
      * Getters
