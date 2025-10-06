@@ -23,7 +23,7 @@ class StoreEquipementRequest extends FormRequest
     {
         return [
             'nom' => 'required|string|max:50',
-            'description' => 'sometimes|nullable|string|max:191',
+            'description' => 'nullable|string|max:1000',
         ];
     }
 }

@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Requests\Equipement;
+namespace App\Http\Requests\TypeChambre;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateEquipementRequest extends FormRequest
+class UpdateTypeChambreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -23,6 +23,8 @@ class UpdateEquipementRequest extends FormRequest
     {
         return [
             'nom' => 'sometimes|string|max:50',
+            'nombre_lits' => 'sometimes|integer|min:1',
+            'capacite_max' => 'sometimes|integer|min:1',
             'description' => 'nullable|string|max:1000',
         ];
     }

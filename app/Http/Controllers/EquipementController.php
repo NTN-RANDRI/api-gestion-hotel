@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Application\DTOs\Equipement\EquipementInputDTO;
 use App\Application\Mappers\EquipementRequestMapper;
 use App\Application\UseCases\Equipement\CreateEquipement;
 use App\Application\UseCases\Equipement\DeleteEquipement;
