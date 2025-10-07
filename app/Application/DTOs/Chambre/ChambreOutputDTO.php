@@ -2,7 +2,7 @@
 
 namespace App\Application\DTOs\Chambre;
 
-use App\Domain\Entities\TypeChambre;
+use App\Application\DTOs\TypeChambre\TypeChambreOutputDTO;
 
 class ChambreOutputDTO
 {
@@ -12,7 +12,7 @@ class ChambreOutputDTO
         public string $numero,
         public int $prixNuit,
         public ?string $description,
-        public TypeChambre $typeChambre
+        public TypeChambreOutputDTO $typeChambre
     )
     {}
 

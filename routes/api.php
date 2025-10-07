@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ChambreController;
 use App\Http\Controllers\EquipementController;
 use App\Http\Controllers\TypeChambreController;
 use Illuminate\Http\Request;
@@ -29,6 +30,14 @@ Route::prefix('equipements')->controller(EquipementController::class)->group(fun
 });
 
 Route::prefix('types-chambre')->controller(TypeChambreController::class)->group(function () {
+    Route::get('/', 'index');
+    Route::get('/{id}', 'show');
+    Route::post('/', 'store');
+    Route::put('/{id}', 'update');
+    Route::delete('/{id}', 'destroy');
+});
+
+Route::prefix('chambres')->controller(ChambreController::class)->group(function () {
     Route::get('/', 'index');
     Route::get('/{id}', 'show');
     Route::post('/', 'store');
