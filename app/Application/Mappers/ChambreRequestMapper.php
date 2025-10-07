@@ -1,0 +1,45 @@
+<?php
+
+namespace App\Application\Mappers;
+
+use App\Application\DTOs\Chambre\ChambreInputDTO;
+use App\Application\DTOs\Chambre\ChambreOutputDTO;
+use App\Domain\Entities\Chambre;
+use App\Domain\Entities\TypeChambre;
+
+class ChambreRequestMapper
+{
+
+    public static function fromRequest(array $data): ChambreInputDTO
+    {
+        return new ChambreInputDTO(
+            numero: $data['numero'],
+            prixNuit: $data['prix_nuit'],
+            description: $data['description'] ?? null,
+            typeChambreId: $data['type_chambre_id']
+        );
+    }
+
+    public static function toDomain(ChambreInputDTO $inputDTO, TypeChambre $typeChambre): Chambre
+    {
+        return new Chambre(
+            id: null,
+            numero: $inputDTO->numero,
+            prixNuit: $inputDTO->prixNuit,
+            description: $inputDTO->description,
+            typeChambre: $typeChambre
+        );
+    }
+
+    public static function toDTO(Chambre $entity): ChambreOutputDTO
+    {
+        return new ChambreOutputDTO(
+            id: $entity->getId(),
+            numero: $entity->getNumero(),
+            prixNuit: $entity->getPrixNuit(),
+            description: $entity->getDescription(),
+            typeChambre: $entity->getTypeChambre()
+        );
+    }
+
+}

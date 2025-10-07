@@ -27,7 +27,7 @@ class UpdateTypeChambre
         $entity->setCapaciteMax($inputDTO->capaciteMax);
         $entity->setDescription($inputDTO->description);
 
-        $this->typeChambreRepositoryInterface->save($entity);
+        $entity = $this->typeChambreRepositoryInterface->save($entity);
 
         return TypeChambreRequestMapper::toDTO($entity);
     }

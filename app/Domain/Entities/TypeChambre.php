@@ -19,7 +19,7 @@ class TypeChambre
     // public function addChambre(Chambre $chambre): void
     // {
     //     $this->chambres[] = $chambre;
-    // }
+    // } 
 
     // public function getChambres(): array
     // {
