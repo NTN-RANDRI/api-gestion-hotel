@@ -5,7 +5,7 @@ namespace App\Infrastructure\Persistance\Eloquent\Mappers;
 use App\Domain\Entities\Equipement;
 use App\Models\Equipement as EquipementModel;
 
-class EquipementMapper
+class EquipementModelMapper
 {
 
     public static function toArray(Equipement $entity): array
@@ -30,7 +30,7 @@ class EquipementMapper
         return new Equipement(
             id: $model->id,
             nom: $model->nom,
-            description: $model->description 
+            description: $model->description
         );
     }
 

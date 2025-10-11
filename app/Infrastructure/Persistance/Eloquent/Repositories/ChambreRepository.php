@@ -4,7 +4,7 @@ namespace App\Infrastructure\Persistance\Eloquent\Repositories;
 
 use App\Domain\Entities\Chambre;
 use App\Domain\Repositories\ChambreRepositoryInterface;
-use App\Infrastructure\Persistance\Eloquent\Mappers\ChambreMapper;
+use App\Infrastructure\Persistance\Eloquent\Mappers\ChambreModelMapper;
 use App\Models\Chambre as ChambreModel;
 
 class ChambreRepository implements ChambreRepositoryInterface
@@ -13,7 +13,7 @@ class ChambreRepository implements ChambreRepositoryInterface
     public function all(): array
     {
         $models = ChambreModel::all();
-        $entityArray = $models->map(fn ($model) => ChambreMapper::toDomain($model))->all();
+        $entityArray = $models->map(fn ($model) => ChambreModelMapper::toDomain($model))->all();
 
         return $entityArray;
     }
@@ -22,7 +22,7 @@ class ChambreRepository implements ChambreRepositoryInterface
     {
         $model = ChambreModel::find($id);
 
-        return $model ? ChambreMapper::toDomain($model) : null;
+        return $model ? ChambreModelMapper::toDomain($model) : null;
     }
 
     public function save(Chambre $entity): Chambre
@@ -31,12 +31,12 @@ class ChambreRepository implements ChambreRepositoryInterface
 
         if ($id) {
             $model = ChambreModel::find($id);
-            $model->update(ChambreMapper::toArray($entity));
+            $model->update(ChambreModelMapper::toArray($entity));
         } else {
-            $model = ChambreModel::create(ChambreMapper::toArray($entity));
+            $model = ChambreModel::create(ChambreModelMapper::toArray($entity));
         }
 
-        return ChambreMapper::toDomain($model);
+        return ChambreModelMapper::toDomain($model);
     }
 
     public function delete(int $id): void

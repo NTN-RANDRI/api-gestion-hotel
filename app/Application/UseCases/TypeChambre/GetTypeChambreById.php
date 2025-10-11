@@ -3,7 +3,7 @@
 namespace App\Application\UseCases\TypeChambre;
 
 use App\Application\DTOs\TypeChambre\TypeChambreOutputDTO;
-use App\Application\Mappers\TypeChambreRequestMapper;
+use App\Application\Mappers\TypeChambreMapper;
 use App\Domain\Repositories\TypeChambreRepositoryInterface;
 use App\Exceptions\Entity\EntityNotFoundException;
 
@@ -21,7 +21,7 @@ class GetTypeChambreById
             throw new EntityNotFoundException('TypeChambre');
         }
 
-        return TypeChambreRequestMapper::toDTO($entity);
+        return TypeChambreMapper::toDTO($entity);
     }
 
 }

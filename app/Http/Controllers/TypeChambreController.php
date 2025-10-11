@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Application\Mappers\TypeChambreRequestMapper;
 use App\Application\UseCases\TypeChambre\CreateTypeChambre;
 use App\Application\UseCases\TypeChambre\DeleteTypeChambre;
 use App\Application\UseCases\TypeChambre\GetTypeChambreById;
 use App\Application\UseCases\TypeChambre\ListTypeChambre;
 use App\Application\UseCases\TypeChambre\UpdateTypeChambre;
+use App\Http\Mappers\TypeChambreHttpMapper;
 use App\Http\Requests\TypeChambre\StoreTypeChambreRequest;
 use App\Http\Requests\TypeChambre\UpdateTypeChambreRequest;
 use App\Http\Responses\ApiResponse;
@@ -43,7 +43,7 @@ class TypeChambreController extends Controller
     public function store(StoreTypeChambreRequest $request): JsonResponse
     {
         $validated = $request->validated();
-        $inputDTO = TypeChambreRequestMapper::fromRequest($validated);
+        $inputDTO = TypeChambreHttpMapper::toDTO($validated);
         $outputDTO = $this->createTypeChambre->execute($inputDTO);
 
         return ApiResponse::crudSuccess('create', self::RESOURCE, $outputDTO);
@@ -52,7 +52,7 @@ class TypeChambreController extends Controller
     public function update(int $id, UpdateTypeChambreRequest $request): JsonResponse
     {
         $validated = $request->validated();
-        $inputDTO = TypeChambreRequestMapper::fromRequest($validated);
+        $inputDTO = TypeChambreHttpMapper::toDTO($validated);
         $outputDTO = $this->updateTypeChambre->execute($id, $inputDTO);
 
         return ApiResponse::crudSuccess('update', self::RESOURCE, $outputDTO);

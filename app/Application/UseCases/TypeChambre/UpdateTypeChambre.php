@@ -4,7 +4,7 @@ namespace App\Application\UseCases\TypeChambre;
 
 use App\Application\DTOs\TypeChambre\TypeChambreInputDTO;
 use App\Application\DTOs\TypeChambre\TypeChambreOutputDTO;
-use App\Application\Mappers\TypeChambreRequestMapper;
+use App\Application\Mappers\TypeChambreMapper;
 use App\Domain\Repositories\TypeChambreRepositoryInterface;
 use App\Exceptions\Entity\EntityNotFoundException;
 
@@ -29,7 +29,7 @@ class UpdateTypeChambre
 
         $entity = $this->typeChambreRepositoryInterface->save($entity);
 
-        return TypeChambreRequestMapper::toDTO($entity);
+        return TypeChambreMapper::toDTO($entity);
     }
 
 }

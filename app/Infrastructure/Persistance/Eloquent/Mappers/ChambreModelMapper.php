@@ -6,7 +6,7 @@ use App\Domain\Entities\Chambre;
 use App\Domain\Entities\TypeChambre;
 use App\Models\Chambre as ChambreModel;
 
-class ChambreMapper
+class ChambreModelMapper
 {
 
     public static function toArray(Chambre $entity): array

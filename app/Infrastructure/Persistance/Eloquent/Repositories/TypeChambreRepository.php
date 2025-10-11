@@ -4,7 +4,7 @@ namespace App\Infrastructure\Persistance\Eloquent\Repositories;
 
 use App\Domain\Entities\TypeChambre;
 use App\Domain\Repositories\TypeChambreRepositoryInterface;
-use App\Infrastructure\Persistance\Eloquent\Mappers\TypeChambreMapper;
+use App\Infrastructure\Persistance\Eloquent\Mappers\TypeChambreModelMapper;
 use App\Models\TypeChambre as TypeChambreModel;
 
 class TypeChambreRepository implements TypeChambreRepositoryInterface
@@ -13,7 +13,7 @@ class TypeChambreRepository implements TypeChambreRepositoryInterface
     public function all(): array
     {
         $models = TypeChambreModel::all();
-        $entityArray = $models->map(fn ($model) => TypeChambreMapper::toDomain($model))->all();
+        $entityArray = $models->map(fn ($model) => TypeChambreModelMapper::toDomain($model))->all();
 
         return $entityArray;
     }
@@ -22,7 +22,7 @@ class TypeChambreRepository implements TypeChambreRepositoryInterface
     {
         $model = TypeChambreModel::find($id);
 
-        return $model ? TypeChambreMapper::toDomain($model) : null;
+        return $model ? TypeChambreModelMapper::toDomain($model) : null;
     }
 
     public function save(TypeChambre $entity): TypeChambre
@@ -31,12 +31,12 @@ class TypeChambreRepository implements TypeChambreRepositoryInterface
 
         if ($id) {
             $model = TypeChambreModel::find($id);
-            $model->update(TypeChambreMapper::toArray($entity));
+            $model->update(TypeChambreModelMapper::toArray($entity));
         } else {
-            $model = TypeChambreModel::create(TypeChambreMapper::toArray($entity));
+            $model = TypeChambreModel::create(TypeChambreModelMapper::toArray($entity));
         }
 
-        return TypeChambreMapper::toDomain($model);
+        return TypeChambreModelMapper::toDomain($model);
     }
 
     public function delete(int $id): void

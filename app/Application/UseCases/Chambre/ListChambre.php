@@ -2,7 +2,7 @@
 
 namespace App\Application\UseCases\Chambre;
 
-use App\Application\Mappers\ChambreRequestMapper;
+use App\Application\Mappers\ChambreMapper;
 use App\Domain\Repositories\ChambreRepositoryInterface;
 
 class ListChambre
@@ -15,7 +15,7 @@ class ListChambre
     {
         $entityCollection = $this->chambreRepositoryInterface->all();
 
-        return array_map(fn($entity) => ChambreRequestMapper::toDTO($entity), $entityCollection);
+        return array_map(fn($entity) => ChambreMapper::toDTO($entity), $entityCollection);
     }
 
 }

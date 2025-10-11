@@ -3,7 +3,7 @@
 namespace App\Application\UseCases\Chambre;
 
 use App\Application\DTOs\Chambre\ChambreOutputDTO;
-use App\Application\Mappers\ChambreRequestMapper;
+use App\Application\Mappers\ChambreMapper;
 use App\Domain\Repositories\ChambreRepositoryInterface;
 use App\Exceptions\Entity\EntityNotFoundException;
 
@@ -21,7 +21,7 @@ class GetChambreById
             throw new EntityNotFoundException('Chambre');
         }
 
-        return ChambreRequestMapper::toDTO($entity);
+        return ChambreMapper::toDTO($entity);
     }
 
 }

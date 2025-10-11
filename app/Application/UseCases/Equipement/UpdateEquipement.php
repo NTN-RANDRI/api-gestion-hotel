@@ -4,7 +4,7 @@ namespace App\Application\UseCases\Equipement;
 
 use App\Application\DTOs\Equipement\EquipementInputDTO;
 use App\Application\DTOs\Equipement\EquipementOutputDTO;
-use App\Application\Mappers\EquipementRequestMapper;
+use App\Application\Mappers\EquipementMapper;
 use App\Domain\Repositories\EquipementRepositoryInterface;
 use App\Exceptions\Entity\EntityNotFoundException;
 
@@ -27,7 +27,7 @@ class UpdateEquipement
 
         $this->equipementRepositoryInterface->save($equipement);
 
-        return EquipementRequestMapper::toDTO($equipement);
+        return EquipementMapper::toDTO($equipement);
     }
 
 }

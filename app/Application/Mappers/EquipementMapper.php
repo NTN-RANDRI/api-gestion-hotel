@@ -6,16 +6,8 @@ use App\Application\DTOs\Equipement\EquipementInputDTO;
 use App\Application\DTOs\Equipement\EquipementOutputDTO;
 use App\Domain\Entities\Equipement;
 
-class EquipementRequestMapper
+class EquipementMapper
 {
-
-    public static function fromRequest(array $data): EquipementInputDTO
-    {
-        return new EquipementInputDTO(
-            nom: $data['nom'],
-            description: $data['description'] ?? null
-        );
-    }
 
     public static function toDomain(EquipementInputDTO $inputDTO): Equipement
     {

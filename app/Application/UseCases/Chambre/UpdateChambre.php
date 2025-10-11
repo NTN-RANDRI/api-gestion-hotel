@@ -4,7 +4,7 @@ namespace App\Application\UseCases\Chambre;
 
 use App\Application\DTOs\Chambre\ChambreInputDTO;
 use App\Application\DTOs\Chambre\ChambreOutputDTO;
-use App\Application\Mappers\ChambreRequestMapper;
+use App\Application\Mappers\ChambreMapper;
 use App\Domain\Repositories\ChambreRepositoryInterface;
 use App\Domain\Repositories\TypeChambreRepositoryInterface;
 use App\Exceptions\Entity\EntityNotFoundException;
@@ -33,7 +33,7 @@ class UpdateChambre
 
         $entity = $this->chambreRepositoryInterface->save($entity);
 
-        return ChambreRequestMapper::toDTO($entity);
+        return ChambreMapper::toDTO($entity);
 
     }
 

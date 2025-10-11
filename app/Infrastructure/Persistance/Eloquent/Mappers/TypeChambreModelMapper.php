@@ -5,7 +5,7 @@ namespace App\Infrastructure\Persistance\Eloquent\Mappers;
 use App\Domain\Entities\TypeChambre;
 use App\Models\TypeChambre as TypeChambreModel;
 
-class TypeChambreMapper
+class TypeChambreModelMapper
 {
 
     public static function toArray(TypeChambre $entity): array

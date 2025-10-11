@@ -6,18 +6,8 @@ use App\Application\DTOs\TypeChambre\TypeChambreInputDTO;
 use App\Application\DTOs\TypeChambre\TypeChambreOutputDTO;
 use App\Domain\Entities\TypeChambre;
 
-class TypeChambreRequestMapper
+class TypeChambreMapper
 {
-
-    public static function fromRequest(array $data): TypeChambreInputDTO
-    {
-        return new TypeChambreInputDTO(
-            nom: $data['nom'],
-            nombreLits: $data['nombre_lits'],
-            capaciteMax: $data['capacite_max'],
-            description: $data['description'] ?? null
-        );
-    }
 
     public static function toDomain(TypeChambreInputDTO $inputDTO): TypeChambre
     {

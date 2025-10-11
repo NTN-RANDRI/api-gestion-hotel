@@ -2,7 +2,7 @@
 
 namespace App\Application\UseCases\TypeChambre;
 
-use App\Application\Mappers\TypeChambreRequestMapper;
+use App\Application\Mappers\TypeChambreMapper;
 use App\Domain\Repositories\TypeChambreRepositoryInterface;
 
 class ListTypeChambre
@@ -15,7 +15,7 @@ class ListTypeChambre
     {
         $entityCollection = $this->typeChambreRepositoryInterface->all();
 
-        return array_map(fn($entity) => TypeChambreRequestMapper::toDTO($entity), $entityCollection);
+        return array_map(fn($entity) => TypeChambreMapper::toDTO($entity), $entityCollection);
     }
 
 }

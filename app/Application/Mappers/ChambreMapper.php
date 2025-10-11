@@ -8,18 +8,8 @@ use App\Application\DTOs\TypeChambre\TypeChambreOutputDTO;
 use App\Domain\Entities\Chambre;
 use App\Domain\Entities\TypeChambre;
 
-class ChambreRequestMapper
+class ChambreMapper
 {
-
-    public static function fromRequest(array $data): ChambreInputDTO
-    {
-        return new ChambreInputDTO(
-            numero: $data['numero'],
-            prixNuit: $data['prix_nuit'],
-            description: $data['description'] ?? null,
-            typeChambreId: $data['type_chambre_id']
-        );
-    }
 
     public static function toDomain(ChambreInputDTO $inputDTO, TypeChambre $typeChambre): Chambre
     {
