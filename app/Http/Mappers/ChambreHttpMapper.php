@@ -13,7 +13,8 @@ class ChambreHttpMapper
             numero: $data['numero'],
             prixNuit: $data['prix_nuit'],
             description: $data['description'] ?? null,
-            typeChambreId: $data['type_chambre_id']
+            typeChambreId: $data['type_chambre_id'],
+            equipementIds: $data['equipements']
         );
     }
 

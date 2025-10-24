@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\TypeChambre as TypeChambreModel;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Chambre extends Model
 {
@@ -18,11 +19,16 @@ class Chambre extends Model
         'type_chambre_id',
     ];
 
-    protected $with = ['typeChambre'];
+    protected $with = ['typeChambre', 'equipements'];
 
     public function typeChambre(): BelongsTo
     {
         return $this->belongsTo(TypeChambreModel::class);
+    }
+
+    public function equipements(): BelongsToMany
+    {
+        return $this->belongsToMany(Equipement::class);
     }
 
 }

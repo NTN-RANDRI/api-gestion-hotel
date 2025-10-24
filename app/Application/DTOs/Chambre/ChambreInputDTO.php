@@ -9,7 +9,8 @@ class ChambreInputDTO
         public string $numero,
         public int $prixNuit,
         public ?string $description,
-        public int $typeChambreId
+        public int $typeChambreId,
+        public array $equipementIds
     )
     {}
 

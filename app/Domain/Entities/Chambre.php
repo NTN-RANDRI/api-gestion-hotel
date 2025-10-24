@@ -10,9 +10,16 @@ class Chambre
         private string $numero,
         private int $prixNuit,
         private ?string $description,
-        private TypeChambre $typeChambre
+        private TypeChambre $typeChambre,
+        private array $equipements
     )
-    {}
+    {
+        foreach ($equipements as $e) {
+            if (!$e instanceof \App\Domain\Entities\Equipement) {
+                throw new \InvalidArgumentException('Tous les éléments de $equipements doivent être des instances de Equipement');
+            }
+        }
+    }
 
     /**
      * Getters
@@ -22,6 +29,7 @@ class Chambre
     public function getPrixNuit(): int { return $this->prixNuit; }
     public function getDescription(): ?string { return $this->description; }
     public function getTypeChambre(): TypeChambre { return $this->typeChambre; }
+    public function getEquipements(): array { return $this->equipements; }
 
     /**
      * Setters
@@ -44,6 +52,11 @@ class Chambre
     public function setTypeChambre(TypeChambre $typeChambre): void
     {
         $this->typeChambre = $typeChambre;
+    }
+
+    public function setEquipements(array $equipements): void
+    {
+        $this->equipements = $equipements;
     }
 
 }

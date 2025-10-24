@@ -26,6 +26,8 @@ class UpdateChambreRequest extends FormRequest
             'prix_nuit' => 'sometimes|integer|min:0',
             'description' => 'nullable|string|max:1000',
             'type_chambre_id' => 'sometimes|integer|exists:type_chambres,id',
+            'equipements' => 'nullable|array',
+            'equipements.*' => 'integer|exists:equipements,id',
         ];
     }
 }

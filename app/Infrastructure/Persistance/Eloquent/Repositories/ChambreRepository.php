@@ -3,6 +3,7 @@
 namespace App\Infrastructure\Persistance\Eloquent\Repositories;
 
 use App\Domain\Entities\Chambre;
+use App\Domain\Entities\Equipement;
 use App\Domain\Repositories\ChambreRepositoryInterface;
 use App\Infrastructure\Persistance\Eloquent\Mappers\ChambreModelMapper;
 use App\Models\Chambre as ChambreModel;
@@ -35,6 +36,12 @@ class ChambreRepository implements ChambreRepositoryInterface
         } else {
             $model = ChambreModel::create(ChambreModelMapper::toArray($entity));
         }
+
+        $equipementIds = array_map(fn (Equipement $e) => $e->getId(), $entity->getEquipements());
+        
+        $model->equipements()->sync($equipementIds);
+
+        $model->load('equipements');
 
         return ChambreModelMapper::toDomain($model);
     }

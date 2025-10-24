@@ -3,6 +3,7 @@
 namespace App\Infrastructure\Persistance\Eloquent\Mappers;
 
 use App\Domain\Entities\Chambre;
+use App\Domain\Entities\Equipement;
 use App\Domain\Entities\TypeChambre;
 use App\Models\Chambre as ChambreModel;
 
@@ -16,6 +17,7 @@ class ChambreModelMapper
             'prix_nuit' => $entity->getPrixNuit(),
             'description' => $entity->getDescription(),
             'type_chambre_id' => $entity->getTypeChambre()->getId(),
+            'equipements' => $entity->getEquipements(),
         ];
     }
 
@@ -27,6 +29,7 @@ class ChambreModelMapper
             'prix_nuit' => $entity->getPrixNuit(),
             'description' => $entity->getDescription(),
             'type_chambre_id' => $entity->getTypeChambre()->getId(),
+            'equipements' => $entity->getEquipements()
         ]);
     }
 
@@ -42,12 +45,21 @@ class ChambreModelMapper
             description: $typeChambreModel->description,
         );
 
+        $equipements = $model->equipements
+            ->map(fn ($e) => new Equipement(
+                id: $e->id,
+                nom: $e->nom,
+                description: $e->description
+            ))
+            ->toArray();
+
         return new Chambre(
             id: $model->id,
             numero: $model->numero,
             prixNuit: $model->prix_nuit,
             description: $model->description,
-            typeChambre: $typeChambre
+            typeChambre: $typeChambre,
+            equipements: $equipements
         );
     }
 
