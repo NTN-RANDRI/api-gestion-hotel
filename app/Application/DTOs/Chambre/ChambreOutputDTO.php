@@ -14,6 +14,7 @@ class ChambreOutputDTO
         public ?string $description,
         public TypeChambreOutputDTO $typeChambre,
         public array $equipements,
+        public array $images
     )
     {}
 

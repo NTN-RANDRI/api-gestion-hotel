@@ -26,8 +26,8 @@ class StoreChambreRequest extends FormRequest
             'prix_nuit' => 'required|integer|min:0',
             'description' => 'nullable|string|max:1000',
             'type_chambre_id' => 'required|integer|exists:type_chambres,id',
-            'equipements' => 'nullable|array',
-            'equipements.*' => 'integer|exists:equipements,id',
+            'equipements' => 'nullable|array', 'equipements.*' => 'integer|exists:equipements,id',
+            'images' => 'nullable|array', 'images.*' => 'image',
         ];
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Application\Services\FileStorageInterface;
 use App\Application\UseCases\Chambre\CreateChambre;
 use App\Application\UseCases\Chambre\DeleteChambre;
 use App\Application\UseCases\Chambre\GetChambreById;
@@ -40,9 +41,21 @@ class ChambreController extends Controller
         return ApiResponse::crudSuccess('read', self::RESOURCE, $outputDTO);
     }
 
-    public function store(StoreChambreRequest $request): JsonResponse
+    public function store(StoreChambreRequest $request, FileStorageInterface $fileStorage): JsonResponse
     {
         $validated = $request->validated();
+
+        $storedImages = [];
+
+        /** @var \Illuminate\Http\Request $request */
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $file) {
+                $storedImages[] = $fileStorage->store($file, 'chambres');
+            }
+        }
+
+        $validated['pathImages'] = $storedImages;
+
         $inputDTO = ChambreHttpMapper::toDTO($validated);
         $outputDTO = $this->createChambre->execute($inputDTO);
 

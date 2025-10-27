@@ -11,7 +11,8 @@ class Chambre
         private int $prixNuit,
         private ?string $description,
         private TypeChambre $typeChambre,
-        private array $equipements
+        private array $equipements,
+        private array $images
     )
     {
         foreach ($equipements as $e) {
@@ -30,6 +31,7 @@ class Chambre
     public function getDescription(): ?string { return $this->description; }
     public function getTypeChambre(): TypeChambre { return $this->typeChambre; }
     public function getEquipements(): array { return $this->equipements; }
+    public function getImages(): array { return $this->images; }
 
     /**
      * Setters
@@ -57,6 +59,11 @@ class Chambre
     public function setEquipements(array $equipements): void
     {
         $this->equipements = $equipements;
+    }
+
+    public function addImage(Image $image): void
+    {
+        $this->images[] = $image;
     }
 
 }

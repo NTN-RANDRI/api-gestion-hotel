@@ -16,14 +16,14 @@ class EquipementModelMapper
         ];
     }
 
-    public static function toModel(Equipement $entity): EquipementModel
-    {
-        return new EquipementModel([
-            'id' => $entity->getId(),
-            'nom' => $entity->getNom(),
-            'description' => $entity->getDescription(),
-        ]);
-    }
+    // public static function toModel(Equipement $entity): EquipementModel
+    // {
+    //     return new EquipementModel([
+    //         'id' => $entity->getId(),
+    //         'nom' => $entity->getNom(),
+    //         'description' => $entity->getDescription(),
+    //     ]);
+    // }
 
     public static function toDomain(EquipementModel $model): Equipement
     {

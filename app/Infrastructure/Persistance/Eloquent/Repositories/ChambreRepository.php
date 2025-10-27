@@ -6,6 +6,7 @@ use App\Domain\Entities\Chambre;
 use App\Domain\Entities\Equipement;
 use App\Domain\Repositories\ChambreRepositoryInterface;
 use App\Infrastructure\Persistance\Eloquent\Mappers\ChambreModelMapper;
+use App\Infrastructure\Persistance\Eloquent\Mappers\ImageModelMapper;
 use App\Models\Chambre as ChambreModel;
 
 class ChambreRepository implements ChambreRepositoryInterface
@@ -38,10 +39,11 @@ class ChambreRepository implements ChambreRepositoryInterface
         }
 
         $equipementIds = array_map(fn (Equipement $e) => $e->getId(), $entity->getEquipements());
-        
         $model->equipements()->sync($equipementIds);
 
-        $model->load('equipements');
+        foreach ($entity->getImages() as $image) {
+            $model->images()->create(ImageModelMapper::toArray($image));
+        }
 
         return ChambreModelMapper::toDomain($model);
     }
