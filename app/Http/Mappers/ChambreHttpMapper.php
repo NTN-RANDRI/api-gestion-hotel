@@ -15,7 +15,6 @@ class ChambreHttpMapper
             description: $data['description'] ?? null,
             typeChambreId: $data['type_chambre_id'],
             equipementIds: $data['equipements'],
-            pathImages: $data['pathImages']
         );
     }
 

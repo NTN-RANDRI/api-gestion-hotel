@@ -17,10 +17,6 @@ class ChambreMapper
 
     public static function toDomain(ChambreInputDTO $inputDTO, TypeChambre $typeChambre, array $equipements): Chambre
     {
-        $images = array_map(fn ($pathImage) => new Image(
-            id: null,
-            path: $pathImage
-        ), $inputDTO->pathImages);
 
         return new Chambre(
             id: null,
@@ -29,7 +25,7 @@ class ChambreMapper
             description: $inputDTO->description,
             typeChambre: $typeChambre,
             equipements: $equipements,
-            images: $images
+            images: []
         );
     }
 

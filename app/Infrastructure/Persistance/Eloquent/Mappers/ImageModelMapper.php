@@ -11,7 +11,9 @@ class ImageModelMapper
   public static function toArray(Image $entity): array
   {
     return [
-      'path' => $entity->getPath()
+      'path' => $entity->getPath(),
+      'imageable_id' => $entity->getImageableId(),
+      'imageable_type' => $entity->getImageableType()
     ];
   }
 
@@ -19,7 +21,9 @@ class ImageModelMapper
   {
     return new Image(
       id: $model->id,
-      path: $model->path
+      path: $model->path,
+      imageableId: $model->imageable_id,
+      imageableType: $model->imageable_type,
     );
   }
 

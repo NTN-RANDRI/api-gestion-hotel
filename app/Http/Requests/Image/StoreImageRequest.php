@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Chambre;
+namespace App\Http\Requests\Image;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreChambreRequest extends FormRequest
+class StoreImageRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,11 +22,10 @@ class StoreChambreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'numero' => 'required|string|max:10',
-            'prix_nuit' => 'required|integer|min:0',
-            'description' => 'nullable|string|max:1000',
-            'type_chambre_id' => 'required|integer|exists:type_chambres,id',
-            'equipements' => 'nullable|array', 'equipements.*' => 'integer|exists:equipements,id',
+            'images' => 'required|array',
+            'images.*' => 'file|mimes:jpg,jpeg,png,gif|max:5120', 
+            'imageable_id' => 'required|integer',
+            'imageable_type' => 'required|string',
         ];
     }
 }

@@ -11,7 +11,6 @@ class ChambreInputDTO
         public ?string $description,
         public int $typeChambreId,
         public array $equipementIds,
-        public array $pathImages
     )
     {}
 
