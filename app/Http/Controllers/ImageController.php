@@ -23,19 +23,14 @@ class ImageController extends Controller
     {
         $validated = $request->validated();
 
-        $storedImages = [];
         /** @var \Illuminate\Http\Request $request */
-        if ($request->hasFile('images')) {
-            foreach ($request->file('images') as $file) {
-                $storedImages[] = $fileStorage->store($file, 'chambres');
-            }
-        }
-        $validated['pathImages'] = $storedImages;
+        $storedImage = $fileStorage->store($request->file('image'), 'chambres');
+        $validated['pathImage'] = $storedImage;
 
-        $inputDTOS = ImageHttpMapper::toDTOs($validated);
-        $outputDTOs = $this->createImage->execute($inputDTOS);
+        $inputDTO = ImageHttpMapper::toDTO($validated);
+        $outputDTO = $this->createImage->execute($inputDTO);
 
-        return ApiResponse::crudSuccess('create', self::RESOURCE, $outputDTOs);
+        return ApiResponse::crudSuccess('create', self::RESOURCE, $outputDTO);
     }
 
     public function destroy(int $id): JsonResponse

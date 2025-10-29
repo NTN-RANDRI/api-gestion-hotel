@@ -14,17 +14,12 @@ class CreateImage
     private ImageRepositoryInterface $imageRepository
   ) {}
 
-  public function execute(array $imageInputs): array /* ImageOutputDTO[] */
+  public function execute(ImageInputDTO $imageInput): ImageOutputDTO
   {
-    $imageOutputs = [];
+    $image = ImageMapper::toDomain($imageInput);
+    $image = $this->imageRepository->save($image);
 
-    foreach ($imageInputs as $imageInput) {
-      $image = ImageMapper::toDomain($imageInput);
-      $image = $this->imageRepository->save($image);
-      $imageOutputs[] = ImageMapper::toDTO($image);
-    }
-
-    return $imageOutputs;
+    return ImageMapper::toDTO($image);
   }
 
 }
