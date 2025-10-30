@@ -14,7 +14,11 @@ class ImageRepository implements ImageRepositoryInterface
   {
     $imageModel = ImageModel::find($id);
 
-    return $imageModel;
+    if (!$imageModel) {
+      return null;
+    }
+
+    return ImageModelMapper::toDomain($imageModel);
   }
 
   public function save(Image $entity): Image
