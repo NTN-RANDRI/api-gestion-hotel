@@ -13,6 +13,7 @@ use App\Http\Requests\Chambre\StoreChambreRequest;
 use App\Http\Requests\Chambre\UpdateChambreRequest;
 use App\Http\Responses\ApiResponse;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class ChambreController extends Controller
 {
@@ -23,7 +24,7 @@ class ChambreController extends Controller
         private GetChambreById $getChambreById,
         private CreateChambre $createChambre,
         private UpdateChambre $updateChambre,
-        private DeleteChambre $deleteChambre
+        private DeleteChambre $deleteChambre,
     )
     {}
 

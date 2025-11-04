@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ChambreController;
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\EquipementController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\TypeChambreController;
@@ -40,13 +41,23 @@ Route::prefix('types-chambre')->controller(TypeChambreController::class)->group(
 
 Route::prefix('chambres')->controller(ChambreController::class)->group(function () {
     Route::get('/', 'index');
-    Route::get('/{id}', 'show');
+    Route::get('/{id}', 'show')->where('id', '[0-9]+');
     Route::post('/', 'store');
-    Route::put('/{id}', 'update');
-    Route::delete('/{id}', 'destroy');
+    Route::put('/{id}', 'update')->where('id', '[0-9]+');
+    Route::delete('/{id}', 'destroy')->where('id', '[0-9]+');
 });
 
 Route::prefix('images')->controller(ImageController::class)->group(function () {
     Route::post('/', 'store');
     Route::delete('/{id}', 'destroy');
 });
+
+Route::prefix('clients')->controller(ClientController::class)->group(function () {
+    Route::get('/', 'index');
+    Route::get('/{id}', 'show');
+    Route::post('/', 'store');
+    Route::put('/{id}', 'update');
+    Route::delete('/{id}', 'destroy');
+});
+
+
