@@ -2,10 +2,12 @@
 
 namespace App\Infrastructure\Persistance\Eloquent\Repositories;
 
+use App\Domain\Entities\Chambre;
 use App\Domain\Entities\Image;
 use App\Domain\Repositories\ImageRepositoryInterface;
 use App\Infrastructure\Persistance\Eloquent\Mappers\ImageModelMapper;
 use App\Models\Image as ImageModel;
+use App\Models\Chambre as ChambreModel;
 
 class ImageRepository implements ImageRepositoryInterface
 {

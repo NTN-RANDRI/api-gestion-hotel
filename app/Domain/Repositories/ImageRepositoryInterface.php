@@ -2,6 +2,7 @@
 
 namespace App\Domain\Repositories;
 
+use App\Domain\Entities\Chambre;
 use App\Domain\Entities\Image;
 
 interface ImageRepositoryInterface

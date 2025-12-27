@@ -8,14 +8,16 @@ use App\Domain\Repositories\ChambreRepositoryInterface;
 class ListChambre
 {
 
-    public function __construct(private ChambreRepositoryInterface $chambreRepositoryInterface)
+    public function __construct(
+        private ChambreRepositoryInterface $chambreRepo,
+    )
     {}
 
     public function execute(): array
     {
-        $entityCollection = $this->chambreRepositoryInterface->all();
+        $chambres = $this->chambreRepo->all();
 
-        return array_map(fn($entity) => ChambreMapper::toDTO($entity), $entityCollection);
+        return ChambreMapper::toDTOs($chambres);
     }
 
 }

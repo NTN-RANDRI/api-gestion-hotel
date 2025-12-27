@@ -27,7 +27,8 @@ class ClientMapper
             nom: $client->getNom(),
             prenom: $client->getPrenom(),
             telephone: $client->getTelephone(),
-            cin: $client->getCin()
+            cin: $client->getCin(),
+            user: $client->getUser() ? UserMapper::toDTO($client->getUser()) : null,
         );
     }
 

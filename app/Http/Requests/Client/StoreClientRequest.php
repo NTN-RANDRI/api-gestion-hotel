@@ -24,8 +24,8 @@ class StoreClientRequest extends FormRequest
         return [
             'nom' => 'required|string|max:100',
             'prenom' => 'required|string|max:100',
-            'telephone' => 'required|string|max:25',
-            'cin' => 'required|string|max:25'
+            'telephone' => 'required|string|max:12',
+            'cin' => 'required|string|max:12'
         ];
     }
 }

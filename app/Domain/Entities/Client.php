@@ -10,7 +10,9 @@ class Client
         private string $nom,
         private string $prenom,
         private string $telephone,
-        private string $cin
+        private string $cin,
+
+        private ?User $user = null,
     ) {}
 
     // GETTERS
@@ -19,6 +21,7 @@ class Client
     public function getPrenom(): string { return $this->prenom; }
     public function getTelephone(): string { return $this->telephone; }
     public function getCin(): string { return $this->cin; }
+    public function getUser(): ?User { return $this->user; }
 
     // SETTERS
     public function setNom(string $nom): void
@@ -39,6 +42,11 @@ class Client
     public function setCin(string $cin): void
     {
         $this->cin = $cin;
+    }
+
+    public function setUser(User $user): void
+    {
+        $this->user = $user;
     }
 
 }

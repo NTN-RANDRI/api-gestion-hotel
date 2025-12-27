@@ -7,6 +7,7 @@ use App\Application\DTOs\Chambre\ChambreOutputDTO;
 use App\Application\Mappers\ChambreMapper;
 use App\Domain\Repositories\ChambreRepositoryInterface;
 use App\Domain\Repositories\EquipementRepositoryInterface;
+use App\Domain\Repositories\ReservationRepositoryInterface;
 use App\Domain\Repositories\TypeChambreRepositoryInterface;
 use App\Exceptions\Entity\EntityNotFoundException;
 
@@ -14,40 +15,36 @@ class UpdateChambre
 {
 
     public function __construct(
-        private ChambreRepositoryInterface $chambreRepositoryInterface,
-        private TypeChambreRepositoryInterface $typeChambreRepositoryInterface,
-        private EquipementRepositoryInterface $equipementRepositoryInterface
+        private ChambreRepositoryInterface $chambreRepo,
+        private TypeChambreRepositoryInterface $typeChambreRepo,
+        private EquipementRepositoryInterface $equipementRepo,
     )
     {}
 
-    public function execute(int $id, ChambreInputDTO $inputDTO): ChambreOutputDTO
+    public function execute(int $id, ChambreInputDTO $chambreInput): ChambreOutputDTO
     {
-        $entity = $this->chambreRepositoryInterface->find($id);
-        if (!$entity) { throw new EntityNotFoundException('Chambre'); }
+        $chambre = $this->chambreRepo->find($id);
+        if (!$chambre) { throw new EntityNotFoundException('Chambre'); }
 
-        $typeChambreEntity = $this->typeChambreRepositoryInterface->find($inputDTO->typeChambreId);
-        if (!$typeChambreEntity) { throw new EntityNotFoundException('TypeChambre'); }
+        $typeChambre = $this->typeChambreRepo->find($chambreInput->typeChambreId);
+        if (!$typeChambre) { throw new EntityNotFoundException('TypeChambre'); }
 
-        $equipementsEntity = array_map(
-            fn ($equipementId) => $this->equipementRepositoryInterface->find($equipementId),
-            $inputDTO->equipementIds
-        );
+        // update chambre
+        $chambre->setNumero($chambreInput->numero);
+        $chambre->setPrixNuit($chambreInput->prixNuit);
+        $chambre->setDescription($chambreInput->description);
+        $chambre->setTypeChambre($typeChambre);
+        $chambre = $this->chambreRepo->save($chambre);
 
-        foreach ($equipementsEntity as $equipement) {
-            if (!$equipement) {
-                throw new EntityNotFoundException('Equipement');
-            }
-        }
+        // update Equipement
+        $equipements = array_map(function ($equipementId) {
+            return $this->equipementRepo->find($equipementId);
+        }, $chambreInput->equipementIds);
 
-        $entity->setNumero($inputDTO->numero);
-        $entity->setPrixNuit($inputDTO->prixNuit);
-        $entity->setDescription($inputDTO->description);
-        $entity->setTypeChambre($typeChambreEntity);
-        $entity->setEquipements($equipementsEntity);
+        $this->chambreRepo->syncEquipements($chambre, $equipements);
+        $chambre->updateEquipement($equipements);
 
-        $entity = $this->chambreRepositoryInterface->save($entity);
-
-        return ChambreMapper::toDTO($entity);
+        return ChambreMapper::toDTO($chambre);
 
     }
 

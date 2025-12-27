@@ -5,39 +5,26 @@ namespace App\Domain\Entities;
 class TypeChambre
 {
 
-    // private array $chambres = [];
-
     public function __construct(
         private ?int $id,
         private string $nom,
         private int $nombreLits,
         private int $capaciteMax,
-        private ?string $description
+        private ?string $description,
+
+        private ?int $totalChambres = null,
     )
     {}
 
-    // public function addChambre(Chambre $chambre): void
-    // {
-    //     $this->chambres[] = $chambre;
-    // } 
-
-    // public function getChambres(): array
-    // {
-    //     return $this->chambres;
-    // }
-
-    /**
-     * Getters
-     */
+    // Getters
     public function getId(): ?int { return $this->id; }
     public function getNom(): string { return $this->nom; }
     public function getNombreLits(): int { return $this->nombreLits; }
     public function getCapaciteMax(): int { return $this->capaciteMax; }
     public function getDescription(): ?string { return $this->description; }
+    public function getTotalChambres(): int { return $this->totalChambres; }
 
-    /**
-     * Setters
-     */
+    // Setters
     public function setNom(string $nom): void
     {
         $this->nom = $nom;

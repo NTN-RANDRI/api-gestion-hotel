@@ -4,18 +4,14 @@ namespace App\Application\Mappers;
 
 use App\Application\DTOs\Chambre\ChambreInputDTO;
 use App\Application\DTOs\Chambre\ChambreOutputDTO;
-use App\Application\DTOs\Equipement\EquipementOutputDTO;
-use App\Application\DTOs\Images\ImageOutputDTO;
-use App\Application\DTOs\TypeChambre\TypeChambreOutputDTO;
 use App\Domain\Entities\Chambre;
 use App\Domain\Entities\Equipement;
-use App\Domain\Entities\Image;
 use App\Domain\Entities\TypeChambre;
 
 class ChambreMapper
 {
 
-    public static function toDomain(ChambreInputDTO $inputDTO, TypeChambre $typeChambre, array $equipements): Chambre
+    public static function toDomain(ChambreInputDTO $inputDTO, TypeChambre $typeChambre): Chambre
     {
 
         return new Chambre(
@@ -24,41 +20,42 @@ class ChambreMapper
             prixNuit: $inputDTO->prixNuit,
             description: $inputDTO->description,
             typeChambre: $typeChambre,
-            equipements: $equipements,
-            images: []
         );
     }
 
-    public static function toDTO(Chambre $entity): ChambreOutputDTO
+    public static function toDTO(Chambre $chambre): ChambreOutputDTO
     {
-        $typeChambre = $entity->getTypeChambre();
+        $typeChambreOutput = TypeChambreMapper::toDTO($chambre->getTypeChambre());
 
-        $equipementsDTOs = array_map(fn(Equipement $e) => new EquipementOutputDTO(
-            id: $e->getId(),
-            nom: $e->getNom(),
-            description: $e->getDescription()
-        ), $entity->getEquipements());
+        $equipementOutputs = array_map(function (Equipement $equipement) {
+            return EquipementMapper::toDTO($equipement);
+        }, $chambre->getEquipements());
 
-        $imageDTOs = array_map(fn (Image $image) => new ImageOutputDTO(
-            id: $image->getId(),
-            url: $image->getUrl()
-        ), $entity->getImages());
+        $imageDTOs = array_map(function ($image) {
+            return ImageMapper::toDTO($image);
+        }, $chambre->getImages());
 
         return new ChambreOutputDTO(
-            id: $entity->getId(),
-            numero: $entity->getNumero(),
-            prixNuit: $entity->getPrixNuit(),
-            description: $entity->getDescription(),
-            typeChambre: new TypeChambreOutputDTO(
-                id: $typeChambre->getId(),
-                nom: $typeChambre->getNom(),
-                nombreLits: $typeChambre->getNombreLits(),
-                capaciteMax: $typeChambre->getCapaciteMax(),
-                description: $typeChambre->getDescription()
-            ),
-            equipements: $equipementsDTOs,
-            images: $imageDTOs
+            id: $chambre->getId(),
+            numero: $chambre->getNumero(),
+            prixNuit: $chambre->getPrixNuit(),
+            description: $chambre->getDescription(),
+            typeChambre: $typeChambreOutput,
+            equipements: $equipementOutputs,
+            images: $imageDTOs,
+            statut: $chambre->getStatut(),
         );
+    }
+
+    /** 
+     * @param \App\Domain\Entities\Chambre[] $chambres
+     * @return \App\Application\DTOs\Chambre\ChambreOutputDTO[]
+     */
+    public static function toDTOs(array $chambres): array
+    {
+        $chambreOutputs = array_map(fn($chambre) => self::toDTO($chambre), $chambres);
+
+        return $chambreOutputs;
     }
 
 }

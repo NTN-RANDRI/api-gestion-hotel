@@ -16,7 +16,7 @@ class UpdateClient
     )
     {}
 
-    public function execute(int $id, ClientInputDTO $clientInput): ClientOutputDTO
+    public function execute(int $id, ClientInputDTO $clientInput, string $email): ClientOutputDTO
     {
         $client = $this->clientRepositoryInterface->find($id);
 

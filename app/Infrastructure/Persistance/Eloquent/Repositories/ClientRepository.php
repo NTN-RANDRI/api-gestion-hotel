@@ -3,8 +3,10 @@
 namespace App\Infrastructure\Persistance\Eloquent\Repositories;
 
 use App\Domain\Entities\Client;
+use App\Domain\Entities\User;
 use App\Domain\Repositories\ClientRepositoryInterface;
 use App\Infrastructure\Persistance\Eloquent\Mappers\ClientModelMapper;
+use App\Infrastructure\Persistance\Eloquent\Mappers\UserModelMapper;
 use App\Models\Client as ClientModel;
 
 class ClientRepository implements ClientRepositoryInterface
@@ -47,5 +49,12 @@ class ClientRepository implements ClientRepositoryInterface
 		$clientModel->delete();
 	}
 
+    public function createUser(int $id, User $user): User
+    {
+        $clientModel = ClientModel::find($id);
+        $userModel = $clientModel->user()->create(UserModelMapper::toArray($user));
+
+        return UserModelMapper::toDomain($userModel);
+    }
 
 }

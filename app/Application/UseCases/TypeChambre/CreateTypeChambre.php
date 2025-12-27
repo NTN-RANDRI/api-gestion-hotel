@@ -10,15 +10,17 @@ use App\Domain\Repositories\TypeChambreRepositoryInterface;
 class CreateTypeChambre
 {
 
-    public function __construct(private TypeChambreRepositoryInterface $typeChambreRepositoryInterface)
+    public function __construct(
+        private TypeChambreRepositoryInterface $typeChambreRepo,
+    )
     {}
 
     public function execute(TypeChambreInputDTO $inputDTO): TypeChambreOutputDTO
     {
-        $entity = TypeChambreMapper::toDomain($inputDTO);
-        $entity = $this->typeChambreRepositoryInterface->save($entity);
+        $type = TypeChambreMapper::toDomain($inputDTO);
+        $type = $this->typeChambreRepo->save($type);
 
-        return TypeChambreMapper::toDTO($entity);
+        return TypeChambreMapper::toDTO($type);
     }
 
 }

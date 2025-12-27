@@ -5,6 +5,7 @@ namespace App\Application\UseCases\Chambre;
 use App\Application\DTOs\Chambre\ChambreInputDTO;
 use App\Application\DTOs\Chambre\ChambreOutputDTO;
 use App\Application\Mappers\ChambreMapper;
+use App\Application\Services\FileStorageInterface;
 use App\Domain\Repositories\ChambreRepositoryInterface;
 use App\Domain\Repositories\EquipementRepositoryInterface;
 use App\Domain\Repositories\TypeChambreRepositoryInterface;
@@ -16,34 +17,39 @@ class CreateChambre
     public function __construct(
         private ChambreRepositoryInterface $chambreRepositoryInterface,
         private TypeChambreRepositoryInterface $typeChambreRepositoryInterface,
-        private EquipementRepositoryInterface $equipementRepositoryInterface
+        private EquipementRepositoryInterface $equipementRepositoryInterface,
+        private FileStorageInterface $fileStorage
     )
     {}
 
-    public function execute(ChambreInputDTO $inputDTO): ChambreOutputDTO
+    /**
+     * @param \Illuminate\Http\UploadedFile[] $files
+     */
+    public function execute(ChambreInputDTO $chambreInput, array $files): ChambreOutputDTO
     {
-        $typeChambreEntity = $this->typeChambreRepositoryInterface->find($inputDTO->typeChambreId);
+        $typeChambre = $this->typeChambreRepositoryInterface->find($chambreInput->typeChambreId);
+        if (!$typeChambre) throw new EntityNotFoundException('TypeChambre');
 
-        if (!$typeChambreEntity) {
-            throw new EntityNotFoundException('TypeChambre');
+        $chambre = ChambreMapper::toDomain($chambreInput, $typeChambre);
+        $chambre = $this->chambreRepositoryInterface->save($chambre);
+
+        // Ajout Equipements
+        foreach ($chambreInput->equipementIds as $equipementId) {
+            $equipement = $this->equipementRepositoryInterface->find($equipementId);
+            if (!$equipement) throw new EntityNotFoundException("L'équipement #$equipementId est introuvable");
+
+            $this->chambreRepositoryInterface->attachEquipement($chambre, $equipement);
+            $chambre->addEquipement($equipement);
         }
 
-        $equipementsEntity = array_map(
-            fn ($equipementId) => $this->equipementRepositoryInterface->find($equipementId),
-            $inputDTO->equipementIds
-        );
-
-        foreach ($equipementsEntity as $equipement) {
-            if (!$equipement) {
-                throw new EntityNotFoundException('Equipement');
-            }
+        // Ajout Image
+        foreach ($files as $file) {
+            $filePath = $this->fileStorage->store($file, 'chambres');
+            $image = $this->chambreRepositoryInterface->createImage($chambre, $filePath);
+            $chambre->addImage($image);
         }
 
-        $entity = ChambreMapper::toDomain($inputDTO, $typeChambreEntity, $equipementsEntity);
-
-        $entity = $this->chambreRepositoryInterface->save($entity);
-
-        return ChambreMapper::toDTO($entity);
+        return ChambreMapper::toDTO($chambre);
     }
 
 }

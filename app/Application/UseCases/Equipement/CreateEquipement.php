@@ -10,7 +10,9 @@ use App\Domain\Repositories\EquipementRepositoryInterface;
 class CreateEquipement
 {
 
-    public function __construct(private EquipementRepositoryInterface $equipementRepositoryInterface)
+    public function __construct(
+        private EquipementRepositoryInterface $equipementRepositoryInterface
+    )
     {}
 
     public function execute(EquipementInputDTO $equipementInputDTO): EquipementOutputDTO

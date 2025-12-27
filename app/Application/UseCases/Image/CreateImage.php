@@ -17,6 +17,7 @@ class CreateImage
   public function execute(ImageInputDTO $imageInput): ImageOutputDTO
   {
     $image = ImageMapper::toDomain($imageInput);
+
     $image = $this->imageRepository->save($image);
 
     return ImageMapper::toDTO($image);

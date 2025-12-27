@@ -18,17 +18,6 @@ class TypeChambreModelMapper
         ];
     }
 
-    public static function toModel(TypeChambre $entity): TypeChambreModel
-    {
-        return new TypeChambreModel([
-            'id' => $entity->getId(),
-            'nom' => $entity->getNom(),
-            'nombre_lits' => $entity->getNombreLits(),
-            'capacite_max' => $entity->getCapaciteMax(),
-            'description' => $entity->getDescription(),
-        ]);
-    }
-
     public static function toDomain(TypeChambreModel $model): TypeChambre
     {
         return new TypeChambre(
@@ -37,6 +26,7 @@ class TypeChambreModelMapper
             nombreLits: $model->nombre_lits,
             capaciteMax: $model->capacite_max,
             description: $model->description,
+            totalChambres: $model->total_chambres,
         );
     }
 

@@ -11,16 +11,12 @@ class Chambre
         private int $prixNuit,
         private ?string $description,
         private TypeChambre $typeChambre,
-        private array $equipements,
-        private array $images
+
+        private ?array $equipements = null,
+        private ?array $images = null,
+        private ?string $statut = null,
     )
-    {
-        foreach ($equipements as $e) {
-            if (!$e instanceof \App\Domain\Entities\Equipement) {
-                throw new \InvalidArgumentException('Tous les éléments de $equipements doivent être des instances de Equipement');
-            }
-        }
-    }
+    {}
 
     /**
      * Getters
@@ -32,6 +28,8 @@ class Chambre
     public function getTypeChambre(): TypeChambre { return $this->typeChambre; }
     public function getEquipements(): array { return $this->equipements; }
     public function getImages(): array { return $this->images; }
+    public function getStatut(): string { return $this->statut; }
+
 
     /**
      * Setters
@@ -56,7 +54,27 @@ class Chambre
         $this->typeChambre = $typeChambre;
     }
 
-    public function setEquipements(array $equipements): void
+    public function setStatut(string $statut): void
+    {
+        $this->statut = $statut;
+    }
+
+    // Méthode publiques
+    public function addEquipement(Equipement $equipement): void
+    {
+        $this->equipements[] = $equipement;
+    }
+
+    /** @param Equipement[] $equipements */
+    public function addManyEquipements(array $equipements): void
+    {
+        foreach ($equipements as $equipement) {
+            $this->addEquipement($equipement);
+        }
+    }
+
+    /** @param Equipement[] $equipements */
+    public function updateEquipement(array $equipements): void
     {
         $this->equipements = $equipements;
     }
@@ -64,6 +82,14 @@ class Chambre
     public function addImage(Image $image): void
     {
         $this->images[] = $image;
+    }
+
+    /** @param Image[] $images */
+    public function addManyImage(array $images): void
+    {   
+        foreach ($images as $image) {
+            $this->addImage($image);
+        }
     }
 
 }

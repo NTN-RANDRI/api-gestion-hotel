@@ -25,7 +25,8 @@ class ClientModelMapper
             nom: $clientModel->nom,
             prenom: $clientModel->prenom,
             telephone: $clientModel->telephone,
-            cin: $clientModel->cin
+            cin: $clientModel->cin,
+            user: $clientModel->user ? UserModelMapper::toDomain($clientModel->user) : null,
         );
     }
 

@@ -21,11 +21,15 @@ class UpdateClientRequest extends FormRequest
      */
     public function rules(): array
     {
+        $userId = auth()->id();
+
         return [
             'nom' => 'sometimes|string|max:100',
             'prenom' => 'sometimes|string|max:100',
             'telephone' => 'sometimes|string|max:25',
-            'cin' => 'sometimes|string|max:25'
+            'cin' => 'sometimes|string|max:25',
+            // 'email' => 'sometimes|email',
+            'email' => 'sometimes|email|unique:users,email,' . $userId
         ];
     }
 }

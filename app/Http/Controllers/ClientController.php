@@ -41,20 +41,25 @@ class ClientController extends Controller
         return ApiResponse::crudSuccess('read', self::RESSOURCE, $clientOutput);
     }
 
-    public function store(StoreClientRequest $request): JsonResponse
+    // public function store(StoreClientRequest $request): JsonResponse
+    // {
+    //     $validated = $request->validated();
+    //     $clientInput = ClientHttpMapper::toDTO($validated);
+    //     $clientOutput = $this->createClient->execute($clientInput);
+
+    //     return ApiResponse::crudSuccess('create', self::RESSOURCE, $clientOutput);
+    // }
+
+    public function update(UpdateClientRequest $request): JsonResponse
     {
         $validated = $request->validated();
-        $clientInput = ClientHttpMapper::toDTO($validated);
-        $clientOutput = $this->createClient->execute($clientInput);
 
-        return ApiResponse::crudSuccess('create', self::RESSOURCE, $clientOutput);
-    }
+        dd(auth()->id());
 
-    public function update(int $id, UpdateClientRequest $request): JsonResponse
-    {
-        $validated = $request->validated();
         $clientInput = ClientHttpMapper::toDTO($validated);
-        $clientOutput = $this->updateClient->execute($id, $clientInput);
+        $email = $validated['email'];
+
+        // $clientOutput = $this->updateClient->execute($id, $clientInput, $email);
 
         return ApiResponse::crudSuccess('update', self::RESSOURCE, $clientOutput);
     }

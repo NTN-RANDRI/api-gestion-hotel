@@ -8,14 +8,16 @@ use App\Domain\Repositories\TypeChambreRepositoryInterface;
 class ListTypeChambre
 {
 
-    public function __construct(private TypeChambreRepositoryInterface $typeChambreRepositoryInterface)
+    public function __construct(
+        private TypeChambreRepositoryInterface $typeChambreRepo,
+    )
     {}
 
     public function execute(): array
     {
-        $entityCollection = $this->typeChambreRepositoryInterface->all();
+        $typeChambres = $this->typeChambreRepo->all();
 
-        return array_map(fn($entity) => TypeChambreMapper::toDTO($entity), $entityCollection);
+        return TypeChambreMapper::toDTOs($typeChambres);
     }
 
 }

@@ -2,6 +2,8 @@
 
 namespace App\Application\DTOs\Client;
 
+use App\Application\DTOs\User\UserOutputDTO;
+
 class ClientOutputDTO
 {
     
@@ -10,7 +12,8 @@ class ClientOutputDTO
         public string $nom,
         public string $prenom,
         public string $telephone,
-        public string $cin
+        public string $cin,
+        public ?UserOutputDTO $user,
     )
     {}
 

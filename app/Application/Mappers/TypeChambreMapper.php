@@ -27,8 +27,14 @@ class TypeChambreMapper
             nom: $entity->getNom(),
             nombreLits: $entity->getNombreLits(),
             capaciteMax: $entity->getCapaciteMax(),
-            description: $entity->getDescription()
+            description: $entity->getDescription(),
+            totalChambres: $entity->getTotalChambres(),
         );
+    }
+
+    public static function toDTOs(array $entities): array
+    {
+        return array_map(fn($entity) => self::toDTO($entity), $entities);
     }
 
 }

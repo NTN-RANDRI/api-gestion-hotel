@@ -5,23 +5,20 @@ namespace App\Application\UseCases\TypeChambre;
 use App\Application\DTOs\TypeChambre\TypeChambreOutputDTO;
 use App\Application\Mappers\TypeChambreMapper;
 use App\Domain\Repositories\TypeChambreRepositoryInterface;
-use App\Exceptions\Entity\EntityNotFoundException;
 
 class GetTypeChambreById
 {
 
-    public function __construct(private TypeChambreRepositoryInterface $typeChambreRepositoryInterface)
+    public function __construct(
+        private TypeChambreRepositoryInterface $typeChambreRepo,
+    )
     {}
 
     public function execute(int $id): TypeChambreOutputDTO
     {
-        $entity = $this->typeChambreRepositoryInterface->find($id);
+        $typeChambre = $this->typeChambreRepo->find($id);
 
-        if (!$entity) {
-            throw new EntityNotFoundException('TypeChambre');
-        }
-
-        return TypeChambreMapper::toDTO($entity);
+        return TypeChambreMapper::toDTO($typeChambre);
     }
 
 }
